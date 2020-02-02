@@ -3,7 +3,7 @@ Some important practices and best standards to follow when developing a REST or 
 
 So, here’s a list of a bunch of things, both obvious and subtle, that can easily be missed when designing, testing, implementing, and releasing a Web API.
 
-######HTTP
+###### HTTP
 The HTTP 1.1 specification, RFC2616, is a hefty document at 54,121 words. Here are some select items from the spec that might affect your API design:
 
 1. Idempotent methods – GET, HEAD, PUT, DELETE, OPTIONS and TRACE are all intended to be idempotent operations; that is, “the side-effects of N > 0 identical requests is the same as for a single request.” (RFC2616 §9.1.2)
@@ -48,7 +48,7 @@ To implement HTTP Authentication accurately, you should provide a 401 status cod
 
 19. URL Length – If your API supports complex or arbitrary filtering options as GET parameters, keep in mind that both clients and servers can have compatibility issues with a URL over 2000 characters long.
 
-######API Design
+###### API Design
 20. Statelessness – There’s one place you don’t want your API to be storing state, and that’s in your application servers. Always keep application servers state-free so that they can be easily and painlessly scaled.
 
 21. Content Negotiation – If you want to support multiple representations of your resources, you can use content negotiation (eg. Accept headers), or differing URLs for different representations (eg. …?format=json), or you can combine both and have your content negotiation resources redirect to specific formats.
@@ -69,14 +69,14 @@ To implement HTTP Authentication accurately, you should provide a 401 status cod
 
 29. Error Logging – Be sure you design how you want your API to perform error logging, rather than just throwing it together. In particular, I find it extremely valuable to distinguish between errors that are caused by the client’s input, and errors that are caused by your software. Keep these in two separate logs.
 
-######Content
+###### Content
 30. Content Types – Entire books could be written about content types; all I’m going to point out is that they’re important. Personally, I like reusing content types that other people have developed, like Atom, Collection+JSON, JSON HAL, or XHTML. Defining your own content type is more work than you expect.
 
 31. HATEOAS – Hypermedia as the Engine of Application State is a REST constraint that, described simply, means that your content should tell the client what it can do next by via links and forms. If you build your API with this constraint it mind, it will be much more resilient to change… if your clients obey your design approach too.
 
 32. Date/time – When you provide date/time values in your API, use a format that includes the timezone information. RFC3339 is a subset of ISO 8601 and is the simplest date and time format.
 
-######Security
+###### Security
 33. TLS – Consider whether you should offer your API under HTTP and HTTPS, or exclusively HTTPS. Exclusively HTTPS is an option growing in popularity.
 
 34. Cross-site Request Forgery (CSRF) – If your API accepts the same authentication configuration that your interactive users use, then you might be vulnerable to a CSRF attack. For example, if your interactive users login and get a “SESSIONID” cookie, and that cookie can also be used to invoke API requests, then a carefully composed HTML form could make unexpected API requests on behalf of your users. (Edit: Read more about protecting APIs from CSRF attacks)
@@ -85,7 +85,7 @@ To implement HTTP Authentication accurately, you should provide a 401 status cod
 
 36. Subtle Denial of Service – Throttling should prevent someone from smashing your API in the simplest way, but there are lots of subtle denial-of-service attacks too. Slowloris, Billion laughs, and ReDoS are interesting examples of DoS attacks that don’t require a lot of source resources, but they can make your API run out of resources quickly.
 
-######Client
+###### Client
 Whether you’re providing test code to your users, or building an SDK for them, check that you’re giving them a client that obeys a few simple rules:
 
 37. Connection Keep-Alive – Some HTTP client libraries require you to do some extra work to enable persistent connections. Persistent connections can have a significant impact on the perceived performance of your API.
@@ -94,7 +94,7 @@ Whether you’re providing test code to your users, or building an SDK for them,
 
 39. Expect: 100-continue – I know at least one API client that defaults to using “Expect: 100-continue”; if it doesn’t receive the “100 Continue” response, it’ll continue with the request after a 3 second timeout. If you don’t support “100 Continue”, this will be another performance drag that can be disabled client-side.
 
-######Other Stuff
+###### Other Stuff
 40. Documentation – Writing API documentation can be a real bore, but hand-written documentation is usually the best documentation. Be sure to include some runnable code or curl command-lines to help get people up-to-speed as quickly as possible. You can also look at documentation tools like apiary.io, Mashery I/O Docs, or Swagger.
 
 41. Design with a Customer! – Don’t design your API in a vacuum; work with a customer and their use-cases. This will help you “Design for Intent” (23).
