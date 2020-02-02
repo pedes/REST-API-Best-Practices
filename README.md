@@ -13,6 +13,7 @@ The HTTP 1.1 specification, RFC2616, is a hefty document at 54,121 words. Here a
 Many popular APIs use HTTP Basic Authentication with an API Key as either the username or the password. This is a simple and effective authentication mechanism.
 
 To implement HTTP Authentication accurately, you should provide a 401 status code with a WWW-Authenticate header if a request is not permitted due to a lack of authentication. Many clients will require this response before sending an Authorization header on a subsequent request.
+
 3. 201 Created – Use the “201 Created” response code to indicate that the request was processed successfully and resulted in the creation of a new resource. 201 responses can include the new resource URI in the Location header. (RFC2616 §10.2.2)
 
 4. 202 Accepted – Use the “202 Accepted” response code to indicate that the request is valid and will be processed, but has not been completed. Typically this is used where a processing queue might be present in the background on the server side. (RFC2616 §10.2.3)
